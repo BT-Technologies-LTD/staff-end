@@ -1,0 +1,28 @@
+{
+  "name": "staff-end",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Staff side for the HR software",
+  "main": "app.js",
+  "dependencies": {
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "passport": "^0.7.0",
+    "passport-custom": "^1.1.1"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "daisyui": "^4.12.10",
+    "nodemon": "^3.1.4",
+    "tailwindcss": "^3.4.10"
+  }
+}
