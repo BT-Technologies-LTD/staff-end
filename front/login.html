@@ -10,13 +10,22 @@
 
 <body class="flex pt-5 flex-col min-h-screen">
     <script type="text/javascript" src="routes/login.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/theme-change@2.4.0/index.js"></script>
+    <script type="text/javascript" src="/misc/theme-switch.js"></script>
+
     <nav
-        class="shadow-2xl dark:shadow-[0_4px_10px_rgba(255,255,255,0.1)] rounded-full navbar bg-base-100 justify-end px-8 mx-auto w-[75%]">
+        class="shadow-2xl fixed z-[100] left-0 right-0 rounded-full navbar bg-base-100 justify-end px-8 mx-auto w-[75%]">
+        <div class="navbar-start">
+            <div class="avatar placeholder">
+                <div class="bg-neutral text-neutral-content w-8 rounded-full">
+                    <span class="text-xs">BT</span>
+                </div>
+            </div>
+        </div>
         <div class="navbar-end">
             <label class="swap swap-rotate">
                 <!-- this hidden checkbox controls the state -->
-                <input data-toggle-theme="black,light" data-act-class="ACTIVECLASS" type="checkbox" value="dark"
+                <input data-toggle-theme="dark,light" data-act-class="ACTIVECLASS" type="checkbox" value="dark"
                     class="theme-controller" />
 
                 <!-- sun icon -->
@@ -37,42 +46,38 @@
         <div class="container px-6 self-center mx-auto">
             <div class="w-auto flex flex-col items-center">
                 <div class="lg:w-1/2 items-center flex flex-col">
-                    <h1
-                        class="mt-4 text-2xl text-center font-medium text-gray-800 capitalize lg:text-3xl dark:text-white">
+                    <h1 class="mt-4 text-2xl text-center font-medium capitalize lg:text-3xl">
                         login
                     </h1>
                 </div>
 
-                <div class="mt-5 lg:w-1/2 flex justify-center">
+                <div class="mt-5 flex flex-col justify-center">
                     <form action="/login" method="post" class="w-full sm:flex sm:gap-3 sm:justify-center lg:max-w-xl">
                         <div class="flex flex-col items-center sm:items-start">
-                            <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Staff
+                            <label for="username" class="block text-sm text-gray-500">Staff
                                 ID</label>
 
                             <input id="username" name="username" required autofocus type="text"
                                 placeholder="abc@gmail.com"
-                                class="block w-auto rounded-full focus:outline-[#3B1332] dark:border-[#3B1332] mt-2 placeholder-gray-400/70 dark:placeholder-gray-500 bg-white px-5 py-2.5 text-gray-700 border dark:bg-gray-900 dark:text-gray-300" />
-
-                            <% if (message) { %>
-                                <p id="error-message" class="mt-1 text-xs text-red-400">
-                                    <%= message %>
-                                </p>
-                                <% } else { %>
-
-                                    <% } %>
-
-
+                                class="block w-auto rounded-full focus:outline-[#3B1332] mt-2 px-5 py-2.5 border-2 border-[#3B1332]" />
                         </div>
 
 
 
                         <div class="mt-8 sm:m-0 md:flex md:items-center sm:self-end flex justify-center">
                             <button type="submit"
-                                class="w-auto rounded-full px-6 py-3 text-sm hover:bg-[#9A4D86] bg-[#83396E] dark:bg-[#3B1332] dark:hover:bg-[#2A0D23] font-medium tracking-wide text-white capitalize transition-colors duration-300 transform focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
-                                Sign in
+                                class="w-auto rounded-full px-6 py-3 text-sm hover:bg-[#9A4D86] bg-[#83396E] font-medium tracking-wide text-white capitalize transition-colors duration-300 transform focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                                Log in
                             </button>
                         </div>
                     </form>
+                    <% if (message) { %>
+                        <p id="error-message" class="mt-1 text-center sm:text-left text-xs text-red-400">
+                            <%= message %>
+                        </p>
+                        <% } else { %>
+
+                            <% } %>
                 </div>
             </div>
         </div>

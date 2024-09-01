@@ -5,10 +5,12 @@ import session from "express-session";
 import dotenv from "dotenv";
 import flash from "connect-flash";
 import cookieParser from "cookie-parser";
+import sample from "../data/sample.js";
 
 dotenv.config();
 
 var router = express.Router();
+const data_list = sample;
 
 router.use(cookieParser());
 router.use(
@@ -16,7 +18,7 @@ router.use(
     secret: process.env.SECRET_KEY,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false },
+    cookie: { secure: false }, // change to true when uploading
   })
 );
 router.use(passport.session());
@@ -27,13 +29,14 @@ router.use((req, res, next) => {
 });
 
 passport.use(
-  new CustomStrategy(function (req, done) {
+  new CustomStrategy(async function (req, done) {
     const staffID = req.body.username;
 
+    const staffMember = data_list.find((member) => member.staff_id === staffID);
+
     // Replace this with your actual verification logic
-    if (staffID === "admin") {
-      const user = { id: staffID }; // Example user object
-      return done(null, user);
+    if (staffMember) {
+      return done(null, staffMember);
     } else {
       return done(null, false, { message: "Invalid Staff ID" });
     }
@@ -41,13 +44,14 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, user.staff_id);
 });
 
 passport.deserializeUser((id, done) => {
   // Fetch user from database or other source
-  const user = { id: id }; // Example user object
-  done(null, user);
+  const staffMember = data_list.find((member) => member.staff_id === id);
+
+  done(null, staffMember);
 });
 
 router.use((req, res, next) => {

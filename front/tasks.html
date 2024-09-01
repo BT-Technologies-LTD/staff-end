@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/app.css" />
+    <title>Tasks</title>
+</head>
+
+<body class="pt-5 flex flex-col">
+    <script src="https://cdn.jsdelivr.net/npm/theme-change@2.4.0/index.js"></script>
+
+    <nav class="navbar shadow-2xl fixed z-[100] left-0 right-0 rounded-full px-8 bg-base-100 w-[75%] mx-auto">
+        <div class="navbar-start">
+            <div class="dropdown">
+                <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h8m-8 6h16" />
+                    </svg>
+                </div>
+                <ul tabindex="0"
+                    class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                    <li><a class="rounded-full" href="/dashboard">Dashboard</a></li>
+                    <li><a href="/holidays" class="rounded-full">Holidays</a></li>
+                    <li><a href="/tasks" class="rounded-full text-white bg-[#83396E]">Tasks</a></li>
+                    <li><a class="rounded-full">Articles</a></li>
+                    <form action="/logout" method="post" class="w-full flex">
+                        <button type="submit"
+                            class="btn rounded-full mx-auto w-[75%] self-center text-white bg-red-600">Log
+                            Out</button>
+                    </form>
+                </ul>
+            </div>
+            <div class="avatar placeholder">
+                <div class="bg-neutral text-neutral-content w-8 rounded-full">
+                    <span class="text-xs">HR</span>
+                </div>
+            </div>
+        </div>
+        <div class="navbar-center hidden lg:flex">
+            <ul class="menu menu-horizontal px-1">
+                <li><a class="rounded-full hover:bg-[#9A4D86] hover:text-white me-3" href="/dashboard">Dashboard</a>
+                </li>
+
+                <li><a href="/holidays" class="me-3 rounded-full hover:bg-[#9A4D86] hover:text-white">Holidays</a>
+                </li>
+                <li><a href="/tasks"
+                        class="me-3 rounded-full hover:bg-[#9A4D86] bg-[#83396E] text-white hover:text-white">Tasks</a>
+                </li>
+                <li><a class="rounded-full hover:bg-[#9A4D86] hover:text-white">Articles</a>
+                </li>
+            </ul>
+        </div>
+        <div class="navbar-end gap-5">
+            <label class="swap swap-rotate">
+                <!-- this hidden checkbox controls the state -->
+                <input data-toggle-theme="dark,light" type="checkbox" value="dark" class="theme-controller" />
+
+                <!-- sun icon -->
+                <svg class="swap-off h-8 w-8 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path
+                        d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z" />
+                </svg>
+
+                <!-- moon icon -->
+                <svg class="swap-on h-8 w-8 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path
+                        d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
+                </svg>
+            </label>
+            <form class="hidden md:flex" action="/logout" method="post">
+                <button type="submit"
+                    class="btn rounded-full btn-outline border-0 hover:border-red-600 hover:bg-red-600 hover:text-white">Log
+                    Out</button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="mx-auto stats shadow mt-24 w-[75%] md:w-auto stats-horizontal">
+        <div class="stat">
+            <div class="stat-figure text-[#83396E]">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-8">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+
+                </svg>
+            </div>
+            <div class="stat-title">Completed Tasks</div>
+            <div class="stat-value text-[#83396E]">
+                <%=completed_tasks%>
+            </div>
+            <div class="stat-desc <%= is_positive ? 'text-green-500' : 'text-red-500' %>">
+                <%= percentage_increase %>% <%= is_positive ? 'more' : 'less' %> than last year
+            </div>
+        </div>
+        <div class="stat">
+            <div class="stat-figure text-[#83396E]">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-8">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
+                </svg>
+
+            </div>
+            <div class="stat-value">
+                <%=completion_percentage%>%
+            </div>
+            <div class="stat-title">Tasks done</div>
+            <div class="stat-desc text-[#83396E]">
+                <% if (not_completed_tasks==0) { %>
+                    All tasks done!
+                    <% } else { %>
+                        <%= not_completed_tasks %>
+                            <%= not_completed_tasks> 1 ? 'tasks' : 'task' %> remaining
+                                <% } %>
+            </div>
+        </div>
+        <div class="stat">
+            <div class="stat-figure text-[#83396E]">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-8">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+
+
+                </svg>
+            </div>
+            <div class="stat-title">Time Spent</div>
+            <div class="stat-value text-xs text-[#83396E]">
+                <div class="grid auto-cols-max grid-flow-col gap-1 text-center">
+                    <div class="flex flex-col">
+                        <span class="font-mono text-2xl">
+                            <%=days%>
+                        </span>
+                        days
+                    </div>
+                    <span class="mt-2">:</span>
+                    <div class="flex flex-col">
+                        <span class="font-mono text-2xl">
+                            <%=hours%>
+                        </span>
+                        hours
+                    </div>
+                    <span class="mt-2">:</span>
+                    <div class="flex flex-col">
+                        <span class="font-mono text-2xl">
+                            <%=minutes%>
+                        </span>
+                        min
+                    </div>
+                    <span class="mt-2">:</span>
+                    <div class="flex flex-col">
+                        <span class="font-mono text-2xl">
+                            <%=seconds%>
+                        </span>
+                        sec
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="overflow-x-auto card mx-auto h-[30rem] shadow-2xl w-[75%] mt-12">
+        <div class="mb-1 flex justify-between px-5 pt-2 text-sm">
+            <!-- Year Filter -->
+            <!-- <div class="flex items-center">
+                <select id="year-filter" class="select select-sm select-ghost">
+                    <option value="all">All Years</option>
+                    <!-- Dynamically populate these options based on available years -->
+            <% Object.keys(tasks_data).forEach(year=> { %>
+                <option value="<%= year %>">
+                    <%= year %>
+                </option>
+                <% }) %>
+                    </select>
+        </div> -->
+
+        <!-- Status Filter -->
+        <div class="flex items-center">
+            <select id="status-filter" class="select select-sm select-ghost">
+                <option value="all">All Statuses</option>
+                <option value="completed">Completed</option>
+                <option value="time_out">Time Out</option>
+                <option value="in_progress">In Progress</option>
+                <option value="pending">Pending</option>
+            </select>
+        </div>
+    </div>
+    <table class="table table-pin-rows table-lg table-pin-cols">
+        <thead>
+            <tr>
+                <th colspan="5" class="bg-base-300 text-center text-center">Tasks for <span id="current-year">All
+                        Years</span>
+                </th>
+            </tr>
+            <tr>
+                <th class="bg-base-300">Team Leader</th>
+                <th class="bg-base-300">Team Members</th>
+                <th class="bg-base-300">Time Left / Time Completed</th>
+                <th class="bg-base-300">Status</th>
+                <th class="bg-base-300">Details</th>
+            </tr>
+        </thead>
+        <tbody id="tasks-table-body">
+        </tbody>
+    </table>
+    </div>
+
+    <script type="text/javascript" src="/misc/theme-switch.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () =>
+        {
+            const yearFilter = document.getElementById('year-filter');
+            const statusFilter = document.getElementById('status-filter');
+            const tasksTableBody = document.getElementById('tasks-table-body');
+            const currentYear = document.getElementById('current-year');
+
+            const tasksData = JSON.parse('<%-JSON.stringify( tasks_data)%>')
+
+            function getStatusBadge(status)
+            {
+                switch (status)
+                {
+                    case 'pending':
+                        return { class: 'badge-info', text: 'Pending' };
+                    case 'completed':
+                        return { class: 'badge-success', text: 'Completed' };
+                    case 'in_progress':
+                        return { class: 'badge-warning', text: 'In Progress' };
+                    case 'time_out':
+                        return { class: 'badge-error', text: 'Timed Out' };
+                    default:
+                        return { class: '', text: 'Unknown' };
+                }
+            }
+
+            function populateTable(year, status)
+            {
+                tasksTableBody.innerHTML = ''; // Clear existing rows
+
+                // Handle 'all' years
+                let filteredTasks = [];
+                if (year === 'all')
+                {
+                    for (const key in tasksData)
+                    {
+                        if (Object.hasOwnProperty.call(tasksData, key))
+                        {
+                            filteredTasks = filteredTasks.concat(tasksData[key]);
+                        }
+                    }
+                } else
+                {
+                    filteredTasks = tasksData[year] || [];
+                }
+
+                // Apply status filter
+                filteredTasks = filteredTasks.filter(task => status === 'all' || task.status === status);
+
+                // Create table rows
+                filteredTasks.forEach((task, index) =>
+                {
+                    const badge = getStatusBadge(task.status);
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                <td class="py-4 whitespace-nowrap text-sm font-medium">${task.team_leader}</td>
+                <td class="py-4 whitespace-nowrap text-sm text-gray-500">${task.team_members.join(', ')}</td>
+                <td class=" py-4 whitespace-nowrap text-sm">${task.status === 'in_progress' ? `
+            <div class="grid auto-cols-max grid-flow-col text-center gap-1 text-sm countdown-div">
+                <div class="flex flex-col items-center justify-center">
+                    <span id="days-${index}" class="countdown font-mono text-sm" data-index="${index}" data-accept-date="${task.date_accepted}" data-hours-to-complete="${task.hours_to_complete}">
+                        <span></span>
+                    </span>
+                    D
+                </div>
+                <span class="self-start">:</span>
+                <div class="flex flex-col items-center justify-center">
+                    <span id="hours-${index}" class="countdown font-mono text-sm" data-index="${index}" data-accept-date="${task.date_accepted}" data-hours-to-complete="${task.hours_to_complete}">
+                        <span></span>
+                    </span>
+                    H
+                </div>
+                <span class="self-start text-start text-left">:</span>
+                <div class="flex flex-col items-center justify-center">
+                    <span id="minutes-${index}" class="countdown font-mono text-sm" data-index="${index}" data-accept-date="${task.date_accepted}" data-hours-to-complete="${task.hours_to_complete}">
+                        <span></span>
+                    </span>
+                    M
+                </div>
+                <span class="self-start">:</span>
+                <div class="flex flex-col items-center justify-center">
+                    <span id="seconds-${index}" class="countdown font-mono text-sm" data-index="${index}" data-accept-date="${task.date_accepted}" data-hours-to-complete="${task.hours_to_complete}">
+                        <span></span>
+                    </span>
+                    S
+                </div>
+        ` : task.time_taken ? `${task.time_taken} hours` : 'N/A'}</td>
+                <td class=" py-4 items-center justify-center "><div class="badge whitespace-nowrap text-xs ${badge.class}">${badge.text}</div></td>
+                <td class=""><button onclick="row_${index}.showModal()" class="btn btn-xs btn-ghost">Details</button> 
+                    <dialog id="row_${index}" class="modal">
+                        <div class="modal-box">
+                            <h3 class="text-lg font-bold">Task Details</h3>
+                            <p class="py-4">${task.desc}</p>
+                            <div class="modal-action">
+                                <form method="dialog"><button class="btn">Close</button></form>
+                            </div>
+                        </div>
+                    </dialog>
+                </td>
+               
+            `;
+                    tasksTableBody.appendChild(row);
+                });
+
+                // Update current year display
+                currentYear.textContent = year === 'all' ? 'All Years' : year;
+            }
+
+            // Event listeners for filters
+            yearFilter.addEventListener('change', () =>
+            {
+                const selectedYear = yearFilter.value;
+                const selectedStatus = statusFilter.value;
+                populateTable(selectedYear, selectedStatus);
+            });
+
+            yearFilter.addEventListener('change', () =>
+            {
+                const selectedYear = yearFilter.value;
+                const selectedStatus = statusFilter.value;
+                currentYear.textContent = selectedYear === 'all' ? 'All Years' : selectedYear;
+                populateTable(selectedYear, selectedStatus);
+            });
+
+            statusFilter.addEventListener('change', () =>
+            {
+                const selectedYear = yearFilter.value;
+                const selectedStatus = statusFilter.value;
+                populateTable(selectedYear, selectedStatus);
+            });
+
+            // Initial population of the table
+            populateTable('all', 'all');
+        });
+    </script>
+    <script type=" text/javascript" src="/misc/countdown.js"></script>
+</body>
+
+</html>

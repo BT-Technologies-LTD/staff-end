@@ -5,12 +5,16 @@
   "description": "Staff side for the HR software",
   "main": "app.js",
   "dependencies": {
+    "axios": "^1.7.5",
+    "chart.js": "^4.4.4",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.6",
+    "countup.js": "^2.8.0",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "express-session": "^1.18.0",
+    "node-cache": "^5.1.2",
     "passport": "^0.7.0",
     "passport-custom": "^1.1.1"
   },
