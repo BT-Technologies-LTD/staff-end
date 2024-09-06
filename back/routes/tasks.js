@@ -1,27 +1,75 @@
 import express from "express";
 import tasksCalculation from "../misc/tasks-calculation.js";
 
-var router = express.Router();
-
-// Iterate over each year
+const router = express.Router();
 
 router.get("/tasks", async (req, res) => {
   try {
-    const tasks_data = req.user.tasks_data;
-    const tasks_calculated_data = tasksCalculation(req.user.tasks_data);
-    const years = Object.keys(tasks_data).sort((a, b) => b - a);
+    const { tasks_data } = req.session.user;
+
+    const tasks = (() => {
+      if (tasks_data) {
+        return tasksCalculation(tasks_data);
+      }
+      return null;
+    })();
+
+    const years = (() => {
+      if (tasks) {
+        return Object.keys(tasks).sort((a, b) => b - a);
+      }
+      return null;
+    })();
+
+    const {
+      completed_tasks,
+      percentageIncrease,
+      is_positive,
+      completion_percentage,
+      not_completed_tasks,
+      days,
+      hours,
+      minutes,
+      seconds,
+    } = (() => {
+      if (tasks) {
+        return {
+          completed_tasks: tasks.completed_tasks,
+          percentageIncrease: tasks.percentageIncrease,
+          is_positive: tasks.is_positive,
+          completion_percentage: tasks.completion_percentage,
+          not_completed_tasks: tasks.not_completed_tasks,
+          days: tasks.days,
+          hours: tasks.hours,
+          minutes: tasks.minutes,
+          seconds: tasks.seconds,
+        };
+      }
+
+      return {
+        completed_tasks: null,
+        percentageIncrease: null,
+        is_positive: null,
+        completion_percentage: null,
+        not_completed_tasks: null,
+        days: null,
+        hours: null,
+        minutes: null,
+        seconds: null,
+      };
+    })();
 
     res.render("tasks", {
-      completed_tasks: tasks_calculated_data.completed_tasks,
-      percentage_increase: tasks_calculated_data.percentageIncrease,
-      is_positive: tasks_calculated_data.is_positive,
-      completion_percentage: tasks_calculated_data.completion_percentage,
-      not_completed_tasks: tasks_calculated_data.not_completed_tasks,
-      days: tasks_calculated_data.days,
-      hours: tasks_calculated_data.hours,
-      minutes: tasks_calculated_data.minutes,
-      seconds: tasks_calculated_data.seconds,
-      tasks_data: tasks_data,
+      completed_tasks,
+      percentage_increase: percentageIncrease,
+      is_positive,
+      completion_percentage,
+      not_completed_tasks,
+      days,
+      hours,
+      minutes,
+      seconds,
+      tasks,
       years: years,
     });
   } catch (error) {
